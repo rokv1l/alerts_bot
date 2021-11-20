@@ -1,0 +1,51 @@
+version: '3'
+
+volumes:
+  alerts_db:
+
+services:
+
+  alerts_db:
+    image: postgres
+    restart: unless-stopped
+    container_name: ${POSTGRES_HOST}
+    env_file:
+      - ./common.env
+    volumes:
+      - alerts_db:/var/lib/postgresql/data
+
+  alerts_bot:
+    build:
+      context: .
+      dockerfile: bot/Dockerfile
+    image: alerts_bot
+    container_name: alerts_bot
+    links:
+      - alerts_db
+    env_file:
+      - ./common.env
+      - ./bot/.env
+    volumes:
+      - ${LOGS_PATH}:${LOGS_PATH}
+    restart: always
+    tty: True
+    working_dir: /bot
+
+  alerts_api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    image: alerts_api
+    container_name: alerts_api
+    links:
+      - alerts_db
+    env_file:
+      - ./common.env
+      - ./api/.env
+    volumes:
+      - ${LOGS_PATH}:${LOGS_PATH}
+    ports:
+      - "0.0.0.0:5001:5001"
+    restart: unless-stopped
+    tty: True
+    working_dir: /api
