@@ -1,5 +1,7 @@
 from os import getenv
 
+from api.src.utils import get_logger
+
 
 db_connect_data = {
     'drivername': 'postgresql',
@@ -11,3 +13,5 @@ db_connect_data = {
 }
 
 token = getenv('TELEGRAM_TOKEN')
+
+logs_path = getenv('LOGS_PATH')

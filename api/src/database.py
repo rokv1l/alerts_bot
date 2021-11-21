@@ -1,4 +1,6 @@
 
+from sqlalchemy import types
+from sqlalchemy import Column
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine.url import URL
@@ -12,8 +14,11 @@ base = declarative_base()
 
 class Alert(base):
     __tablename__ = 'alerts'
-
-
+    
+    id = Column(types.Integer, primary_key=True, autoincrement=True)
+    message = Column(types.Text)
+    datetime = Column(types.DateTime)
+    sent = Column(types.Boolean, default=False)
 
 
 engine = create_engine(URL(**config.db_connect_data))

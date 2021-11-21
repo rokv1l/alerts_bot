@@ -10,3 +10,4 @@ db_connect_data = {
     'database': getenv('POSTGRES_DB'),
 }
 
+logs_path = getenv('LOGS_PATH')
