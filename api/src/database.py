@@ -12,6 +12,13 @@ import config
 base = declarative_base()
 
 
+class User(base):
+    __tabelname__ = 'users'
+
+    id = Column(types.Integer, primary_key=True)
+    active = Column(types.Boolean, default=True)
+
+
 class Alert(base):
     __tablename__ = 'alerts'
     

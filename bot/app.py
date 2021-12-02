@@ -1,7 +1,10 @@
 from src.telegram_api import updater, dispatcher
 
 
-if __name__ == '__main__':
-
+def  main():
     updater.start_polling()
     updater.idle()
+
+
+if __name__ == '__main__':
+    main()
